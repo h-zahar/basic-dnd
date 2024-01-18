@@ -45,7 +45,8 @@ const Tooltip = ({
     left: `${leftValue}px`,
     border: "1px solid #ccc",
     padding: "5px",
-    backgroundColor: "#fff",
+    color: "#000",
+    background: "#fff",
     zIndex: 1000,
   };
 
