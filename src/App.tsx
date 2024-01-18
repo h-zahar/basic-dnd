@@ -164,8 +164,9 @@ const App = () => {
         style={{
           marginBottom: 70,
           marginTop: 60,
-          display: "flex",
-          justifyContent: "center",
+          position: "fixed",
+          top: 10,
+          left: "45%",
         }}
       >
         <label style={{ marginRight: "10px" }}>Direction: </label>
@@ -191,8 +192,8 @@ const App = () => {
           // flexDirection: "column",
           // justifyContent: "center",
           alignItems: "center",
-          border: "1px solid blue",
-          height: "75vh",
+          // border: "1px solid blue",
+          height: "99.5vh",
         }}
       >
         <div
