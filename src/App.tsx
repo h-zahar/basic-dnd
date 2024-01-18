@@ -10,6 +10,7 @@ const App = () => {
   });
   const [isDragging, setIsDragging] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [direction, setDirection] = useState("top");
 
   const handleMouseOver = () => {
     const parentRect = document
@@ -99,10 +100,27 @@ const App = () => {
         width: "100vw",
         height: "100vh",
         display: "flex",
+        flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
       }}
     >
+      <div style={{ marginBottom: 70 }}>
+        <label>Direction: </label>
+        <select
+          value={direction}
+          onChange={(e) => {
+            setDirection(e.target.value);
+          }}
+        >
+          <option value={"top"} selected>
+            Default
+          </option>
+          <option value={"top"}>Top</option>
+          <option value={"left"}>Left</option>
+        </select>
+      </div>
+
       <div
         id="container"
         style={{
@@ -130,7 +148,7 @@ const App = () => {
         {!isDragging && isHovered && (
           <Tooltip
             position={absolutePosition}
-            direction={"top"}
+            direction={direction}
             content={tooltipContent}
           />
         )}
