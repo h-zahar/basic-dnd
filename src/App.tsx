@@ -209,7 +209,7 @@ const App = () => {
         >
           <div
             style={{
-              position: "relative",
+              position: "absolute",
               top: 0,
               left: "calc(100% - 31px)",
               width: 30,
@@ -222,6 +222,96 @@ const App = () => {
           >
             #
           </div>
+
+          <div
+            id="resize-bottom"
+            style={{
+              width: 400,
+              height: 5,
+              cursor: "ns-resize",
+              position: "absolute",
+              top: "100%",
+              left: 0,
+            }}
+          ></div>
+          <div
+            id="resize-top"
+            style={{
+              width: 400,
+              height: 5,
+              cursor: "ns-resize",
+              position: "absolute",
+              top: -2,
+              left: 0,
+            }}
+          ></div>
+          <div
+            id="resize-left"
+            style={{
+              height: 400,
+              width: 5,
+              cursor: "ew-resize",
+              position: "absolute",
+              left: -1,
+              top: 0,
+            }}
+          ></div>
+          <div
+            id="resize-right"
+            style={{
+              height: 400,
+              width: 5,
+              cursor: "ew-resize",
+              position: "absolute",
+              top: 0,
+              left: "100%",
+            }}
+          ></div>
+
+          <div
+            id="resize-tl"
+            style={{
+              width: 5,
+              height: 5,
+              cursor: "nwse-resize",
+              position: "absolute",
+              top: -5,
+              left: -5,
+            }}
+          ></div>
+          <div
+            id="resize-tr"
+            style={{
+              width: 5,
+              height: 5,
+              cursor: "nesw-resize",
+              position: "absolute",
+              top: -5,
+              left: "100.5%",
+            }}
+          ></div>
+          <div
+            id="resize-bl"
+            style={{
+              width: 5,
+              height: 5,
+              cursor: "nesw-resize",
+              position: "absolute",
+              top: "100.5%",
+              left: -5,
+            }}
+          ></div>
+          <div
+            id="resize-br"
+            style={{
+              width: 5,
+              height: 5,
+              cursor: "nwse-resize",
+              position: "absolute",
+              top: "100.5%",
+              left: "100.5%",
+            }}
+          ></div>
           <div
             id="dragbox"
             style={{
