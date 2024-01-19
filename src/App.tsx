@@ -15,6 +15,10 @@ const App = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [direction, setDirection] = useState("top");
+  const [deltaHeight, setDeltaHeight] = useState(0);
+
+  const [containerHeight, setContainerHeight] = useState(400);
+  const [containerWidth, setContainerWidth] = useState(400);
 
   const handleMouseOver = () => {
     const parentRect = document
@@ -136,9 +140,9 @@ const App = () => {
     //   .getElementById("container")
     //   ?.getBoundingClientRect();
 
-    const maxX = parentRect?.width && parentRect.width - 400;
-    const maxY = parentRect?.height && parentRect.height - 400;
-    console.log(maxX, maxY);
+    const maxX = parentRect?.width && parentRect.width - containerWidth;
+    const maxY = parentRect?.height && parentRect.height - containerHeight;
+    // console.log(maxX, maxY);
 
     const boundedX = Math.min(Math.max(newX, 0), maxX ? maxX : 0);
     const boundedY = Math.min(Math.max(newY, 0), maxY ? maxY : 0);
@@ -156,7 +160,132 @@ const App = () => {
     document.removeEventListener("mousemove", handleContainerMouseMove);
     document.removeEventListener("mouseup", handleContainerMouseUp);
   };
-  console.log(containerPosition);
+  // console.log(containerPosition);
+
+  let bottomStartPosition = { x: 0, y: 0 };
+  const handleResizeBottomMouseDown = (e: React.MouseEvent) => {
+    bottomStartPosition = { x: e.clientX, y: e.clientY };
+
+    document.addEventListener("mousemove", handleResizeBottomMove);
+    document.addEventListener("mouseup", handleResizeBottomUp);
+  };
+
+  const handleResizeBottomMove = (e: MouseEvent) => {
+    // const newX =
+    // e.clientX - (startPosition.x === 0 ? e.clientX : startPosition.x);
+    const newY = e.clientY - (position.y === 0 ? e.clientY : position.y);
+
+    const parentRect = document
+      .getElementById("container")
+      ?.getBoundingClientRect();
+
+    const dragboxRect = document
+      .getElementById("dragbox")
+      ?.getBoundingClientRect();
+
+    // const maxX = parentRect?.width && parentRect.width - 100;
+    const maxY = parentRect?.height && parentRect.height - 100;
+
+    // const boundedX = Math.min(Math.max(newX, 0), maxX ? maxX : 0);
+    const boundedY = Math.min(Math.max(newY, 0), maxY ? maxY : 0);
+
+    if (maxY! <= position.y) setPosition({ x: position.x, y: boundedY });
+    setContainerHeight(
+      Math.max(100, containerHeight + (e.clientY - bottomStartPosition.y))
+    );
+  };
+
+  const handleResizeBottomUp = () => {
+    document.removeEventListener("mousemove", handleResizeBottomMove);
+    document.removeEventListener("mouseup", handleResizeBottomUp);
+  };
+
+  let rightStartPosition = { x: 0, y: 0 };
+  const handleRightMouseDown = (e: React.MouseEvent) => {
+    rightStartPosition = { x: e.clientX, y: e.clientY };
+
+    document.addEventListener("mousemove", handleRightMove);
+    document.addEventListener("mouseup", handleRightUp);
+  };
+
+  const handleRightMove = (e: MouseEvent) => {
+    const newX = e.clientX - (position.x === 0 ? e.clientX : position.x);
+    // const newY = e.clientY - (position.y === 0 ? e.clientY : position.y);
+
+    const parentRect = document
+      .getElementById("container")
+      ?.getBoundingClientRect();
+
+    const dragboxRect = document
+      .getElementById("dragbox")
+      ?.getBoundingClientRect();
+
+    const maxX = parentRect?.width && parentRect.width - 100;
+    // const maxY = parentRect?.height && parentRect.height - 100;
+
+    const boundedX = Math.min(Math.max(newX, 0), maxX ? maxX : 0);
+    // const boundedY = Math.min(Math.max(newY, 0), maxY ? maxY : 0);
+
+    if (maxX! <= position.x) setPosition({ x: boundedX, y: position.y });
+    setContainerWidth(
+      Math.max(100, containerWidth + (e.clientX - rightStartPosition.x))
+    );
+  };
+
+  const handleRightUp = () => {
+    document.removeEventListener("mousemove", handleRightMove);
+    document.removeEventListener("mouseup", handleRightUp);
+  };
+
+  let brStartPosition = { x: 0, y: 0 };
+  const handleBottomRightDown = (e: React.MouseEvent) => {
+    brStartPosition = { x: e.clientX, y: e.clientY };
+
+    document.addEventListener("mousemove", handleBottomRightMove);
+    document.addEventListener("mouseup", handleBottomRightUp);
+  };
+
+  const handleBottomRightMove = (e: MouseEvent) => {
+    const newX = e.clientX - (position.x === 0 ? e.clientX : position.x);
+    const newY = e.clientY - (position.y === 0 ? e.clientY : position.y);
+
+    const parentRect = document
+      .getElementById("container")
+      ?.getBoundingClientRect();
+
+    const dragboxRect = document
+      .getElementById("dragbox")
+      ?.getBoundingClientRect();
+
+    const maxX = parentRect?.width && parentRect.width - 100;
+    const maxY = parentRect?.height && parentRect.height - 100;
+
+    const boundedX = Math.min(Math.max(newX, 0), maxX ? maxX : 0);
+    const boundedY = Math.min(Math.max(newY, 0), maxY ? maxY : 0);
+
+    if (maxX! <= position.x)
+      maxY! <= position.y
+        ? setPosition({ x: boundedX, y: boundedY })
+        : setPosition({ x: boundedX, y: position.y });
+    else if (maxY! <= position.y)
+      maxX! <= position.x
+        ? setPosition({ x: boundedX, y: boundedY })
+        : setPosition({ x: position.x, y: boundedY });
+
+    setContainerWidth(
+      Math.max(100, containerWidth + (e.clientX - brStartPosition.x))
+    );
+    setContainerHeight(
+      Math.max(100, containerHeight + (e.clientY - brStartPosition.y))
+    );
+  };
+
+  const handleBottomRightUp = () => {
+    document.removeEventListener("mousemove", handleBottomRightMove);
+    document.removeEventListener("mouseup", handleBottomRightUp);
+  };
+
+  // console.log(containerWidth);
 
   return (
     <div style={{ width: "100vw", height: "100vh" }}>
@@ -199,8 +328,8 @@ const App = () => {
         <div
           id="container"
           style={{
-            width: "400px",
-            height: "400px",
+            width: `${containerWidth}px`,
+            height: `${containerHeight}px`,
             position: "relative",
             top: `${containerPosition.y}px`,
             left: `${containerPosition.x}px`,
@@ -226,18 +355,19 @@ const App = () => {
           <div
             id="resize-bottom"
             style={{
-              width: 400,
+              width: `${containerWidth}px`,
               height: 5,
               cursor: "ns-resize",
               position: "absolute",
               top: "100%",
               left: 0,
             }}
+            onMouseDown={handleResizeBottomMouseDown}
           ></div>
           <div
             id="resize-top"
             style={{
-              width: 400,
+              width: `${containerWidth}px`,
               height: 5,
               cursor: "ns-resize",
               position: "absolute",
@@ -248,7 +378,7 @@ const App = () => {
           <div
             id="resize-left"
             style={{
-              height: 400,
+              height: `${containerHeight}px`,
               width: 5,
               cursor: "ew-resize",
               position: "absolute",
@@ -259,13 +389,14 @@ const App = () => {
           <div
             id="resize-right"
             style={{
-              height: 400,
+              height: `${containerHeight}px`,
               width: 5,
               cursor: "ew-resize",
               position: "absolute",
               top: 0,
               left: "100%",
             }}
+            onMouseDown={handleRightMouseDown}
           ></div>
 
           <div
@@ -311,6 +442,7 @@ const App = () => {
               top: "100.5%",
               left: "100.5%",
             }}
+            onMouseDown={handleBottomRightDown}
           ></div>
           <div
             id="dragbox"
@@ -332,6 +464,8 @@ const App = () => {
               position={absolutePosition}
               direction={direction}
               content={tooltipContent}
+              containerHeight={containerHeight}
+              containerWidth={containerWidth}
             />
           )}
         </div>
