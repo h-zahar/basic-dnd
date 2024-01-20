@@ -414,8 +414,8 @@ const App = () => {
     const maxX = parentRect?.width && parentRect.width - 100;
 
     // const boundedX = Math.min(Math.max(newX, 0), maxX ? maxX : 0);
-    const boundedY = Math.min(Math.max(newY, 0), maxY ? maxY : 0);
-    const boundedX = Math.min(Math.max(newX, 0), maxX ? maxX : 0);
+    const boundedY = maxY ? maxY : 0;
+    const boundedX = maxX ? maxX : 0;
 
     if (maxY! <= position.y)
       maxX! <= position.x
