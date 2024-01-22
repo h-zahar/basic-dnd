@@ -118,10 +118,7 @@ const useResize = ({
           : setPosition({ x: boundedX, y: position.y });
 
       setContainerPosition({
-        x: Math.min(
-          startPosition.x + containerWidth - 100,
-          containerPosition.x + (e.clientX - startPosition.x)
-        ),
+        x: containerPosition.x,
         y: Math.min(
           startPosition.y + containerHeight - 100,
           containerPosition.y + (e.clientY - startPosition.y)
@@ -133,7 +130,7 @@ const useResize = ({
       );
 
       setContainerWidth(
-        Math.max(100, containerWidth - (e.clientX - startPosition.x))
+        Math.max(100, containerWidth + (e.clientX - startPosition.x))
       );
     } else if (handlerString === "bottom-left") {
       if (maxY! <= position.y)
