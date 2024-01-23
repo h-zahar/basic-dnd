@@ -45,7 +45,7 @@ const ResizeHandler = ({
           cursor: "ew-resize",
           position: "absolute",
           left: -1,
-          top: 0,
+          top: -2.5,
           zIndex: 1000,
         }}
         onMouseDown={(e) => onResizeMouseDown(e, "left")}
