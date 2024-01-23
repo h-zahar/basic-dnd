@@ -286,7 +286,7 @@ const App = () => {
               cursor: "ew-resize",
               position: "absolute",
               top: 0,
-              left: "99.2%",
+              left: "99.5%",
               zIndex: 1000,
             }}
             onMouseDown={(e) => onResizeMouseDown(e, "right")}
