@@ -16,7 +16,7 @@ const App = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [direction, setDirection] = useState("top");
-  const [deltaHeight, setDeltaHeight] = useState(0);
+  // const [deltaHeight, setDeltaHeight] = useState(0);
 
   const [containerHeight, setContainerHeight] = useState(400);
   const [containerWidth, setContainerWidth] = useState(400);

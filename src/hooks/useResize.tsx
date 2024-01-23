@@ -1,7 +1,7 @@
 interface HookProps {
   position: { x: number; y: number };
   containerHeight: number;
-  conatainerWidth: number;
+  containerWidth: number;
   containerPosition: { x: number; y: number };
   setPosition: (position: { x: number; y: number }) => void;
   setContainerPosition: (containerPosition: { x: number; y: number }) => void;
@@ -33,9 +33,9 @@ const useResize = ({
       .getElementById("container")
       ?.getBoundingClientRect();
 
-    const dragboxRect = document
-      .getElementById("dragbox")
-      ?.getBoundingClientRect();
+    // const dragboxRect = document
+    //   .getElementById("dragbox")
+    //   ?.getBoundingClientRect();
 
     // const maxX = parentRect?.width && parentRect.width - 100;
     const maxX = parentRect?.width && parentRect.width - 100;
