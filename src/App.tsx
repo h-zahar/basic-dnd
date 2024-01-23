@@ -232,7 +232,7 @@ const App = () => {
               left: "calc(100% - 31px)",
               width: 30,
               height: 30,
-              border: "1px solid black",
+              border: "1px solid lightblue",
               textAlign: "center",
               cursor: "grab",
             }}
