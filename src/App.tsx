@@ -246,8 +246,9 @@ const App = () => {
               height: 5,
               cursor: "ns-resize",
               position: "absolute",
-              top: "100%",
+              top: "99.2%",
               left: 0,
+              zIndex: 1000,
             }}
             onMouseDown={(e) => onResizeMouseDown(e, "bottom")}
           ></div>
@@ -260,6 +261,7 @@ const App = () => {
               position: "absolute",
               top: -2,
               left: 0,
+              zIndex: 1000,
             }}
             onMouseDown={(e) => onResizeMouseDown(e, "top")}
           ></div>
@@ -272,6 +274,7 @@ const App = () => {
               position: "absolute",
               left: -1,
               top: 0,
+              zIndex: 1000,
             }}
             onMouseDown={(e) => onResizeMouseDown(e, "left")}
           ></div>
@@ -283,7 +286,8 @@ const App = () => {
               cursor: "ew-resize",
               position: "absolute",
               top: 0,
-              left: "100%",
+              left: "99.2%",
+              zIndex: 1000,
             }}
             onMouseDown={(e) => onResizeMouseDown(e, "right")}
           ></div>
@@ -297,6 +301,7 @@ const App = () => {
               position: "absolute",
               top: 0,
               left: 0,
+              zIndex: 1200,
             }}
             onMouseDown={(e) => onResizeMouseDown(e, "top-left")}
           ></div>
@@ -309,6 +314,7 @@ const App = () => {
               position: "absolute",
               top: 0,
               left: "99.5%",
+              zIndex: 1200,
             }}
             onMouseDown={(e) => onResizeMouseDown(e, "top-right")}
           ></div>
@@ -321,6 +327,7 @@ const App = () => {
               position: "absolute",
               top: "99.5%",
               left: -1,
+              zIndex: 1200,
             }}
             onMouseDown={(e) => onResizeMouseDown(e, "bottom-left")}
           ></div>
@@ -333,6 +340,7 @@ const App = () => {
               position: "absolute",
               top: "99.5%",
               left: "99.5%",
+              zIndex: 1200,
             }}
             onMouseDown={(e) => onResizeMouseDown(e, "bottom-right")}
           ></div>
