@@ -5,10 +5,14 @@ const Tooltip = ({
   position,
   content,
   direction,
+  containerHeight,
+  containerWidth,
 }: {
   position: { parentbox: { x: number; y: number }; x: number; y: number };
   content: string;
   direction: string;
+  containerHeight: number;
+  containerWidth: number;
 }) => {
   let topValue = 0;
   let leftValue = 0;
@@ -27,14 +31,16 @@ const Tooltip = ({
     topValue = position.y + 35;
   } else if (direction === "bottom") {
     topValue =
-      Math.abs(position.y - position?.parentbox?.y - 300) <= 40
+      Math.abs(position.y - position?.parentbox?.y - (containerHeight - 100)) <=
+      40
         ? position.y - 45
         : position.y + 105;
     leftValue = position.x + 35;
   } else if (direction === "right") {
     topValue = position.y + 35;
     leftValue =
-      Math.abs(position.x - position?.parentbox?.x - 300) <= 45
+      Math.abs(position.x - position?.parentbox?.x - (containerWidth - 100)) <=
+      45
         ? position.x - 45
         : position.x + 105;
   }
