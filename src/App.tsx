@@ -222,6 +222,7 @@ const App = () => {
             top: `${containerPosition.y}px`,
             left: `${containerPosition.x}px`,
             border: "1px solid #ccc",
+            overflow: "hidden",
           }}
         >
           <div
