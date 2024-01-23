@@ -286,7 +286,7 @@ const App = () => {
               cursor: "ew-resize",
               position: "absolute",
               top: 0,
-              left: "99.2%",
+              left: "99.5%",
               zIndex: 1000,
             }}
             onMouseDown={(e) => onResizeMouseDown(e, "right")}
@@ -351,8 +351,8 @@ const App = () => {
               height: "100px",
               backgroundColor: "lightblue",
               position: "absolute",
-              top: `${position.y}px`,
-              left: `${position.x}px`,
+              bottom: `${position.y}px`,
+              right: `${position.x}px`,
               cursor: "move",
             }}
             onMouseDown={handleMouseDown}
