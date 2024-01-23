@@ -351,8 +351,10 @@ const App = () => {
               height: "100px",
               backgroundColor: "lightblue",
               position: "absolute",
-              bottom: `${position.y}px`,
-              right: `${position.x}px`,
+              top: `${position.y}px`,
+              bottom: "auto",
+              left: `${position.x}px`,
+              right: "auto",
               cursor: "move",
             }}
             onMouseDown={handleMouseDown}
