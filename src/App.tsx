@@ -1,6 +1,9 @@
 import { useState } from "react";
 import Tooltip from "./components/Tooltip";
 import useResize from "./hooks/useResize";
+import ResizeHandler from "./components/ResizeHandler";
+import ContainerHandler from "./components/ContainerHandler";
+import TooltipDirection from "./components/TooltipDirection";
 
 const App = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -103,7 +106,6 @@ const App = () => {
       y: dragboxRect?.y || 0,
       x: dragboxRect?.x || 0,
     });
-    // console.log(e.clientX);
   };
 
   const handleMouseUp = () => {
@@ -120,17 +122,6 @@ const App = () => {
       x: e.clientX - containerPosition.x,
       y: e.clientY - containerPosition.y,
     };
-    // const parentRect = document
-    //   .getElementById("main-container")
-    //   ?.getBoundingClientRect();
-    // const dragboxRect = document
-    //   .getElementById("container")
-    //   ?.getBoundingClientRect();
-    // setContainerPosition({
-    //   y: dragboxRect?.y || 0,
-    //   x: dragboxRect?.x || 0,
-    // });
-    // console.log(e.clientX, e.clientY);
 
     document.addEventListener("mousemove", handleContainerMouseMove);
     document.addEventListener("mouseup", handleContainerMouseUp);
@@ -148,32 +139,19 @@ const App = () => {
       .getElementById("main-container")
       ?.getBoundingClientRect();
 
-    // const dragboxRect = document
-    //   .getElementById("container")
-    //   ?.getBoundingClientRect();
-
     const maxX = parentRect?.width && parentRect.width - containerWidth;
     const maxY = parentRect?.height && parentRect.height - containerHeight;
-    // console.log(maxX, maxY);
 
     const boundedX = Math.min(Math.max(newX, 0), maxX ? maxX : 0);
     const boundedY = Math.min(Math.max(newY, 0), maxY ? maxY : 0);
 
     setContainerPosition({ x: boundedX, y: boundedY });
-    // setAbsolutePosition({
-    //   parentbox: { x: parentRect?.x || 0, y: parentRect?.y || 0 },
-    //   y: dragboxRect?.y || 0,
-    //   x: dragboxRect?.x || 0,
-    // });
-    // console.log(e.clientX, e.clientY);
   };
 
   const handleContainerMouseUp = () => {
     document.removeEventListener("mousemove", handleContainerMouseMove);
     document.removeEventListener("mouseup", handleContainerMouseUp);
   };
-  // console.log(containerPosition);
-  // console.log(containerWidth);
 
   return (
     <div style={{ width: "100vw", height: "100vh" }}>
@@ -186,30 +164,12 @@ const App = () => {
           left: "45%",
         }}
       >
-        <label style={{ marginRight: "10px" }}>Direction: </label>
-        <select
-          value={direction}
-          onChange={(e) => {
-            setDirection(e.target.value);
-          }}
-        >
-          <option value={""} disabled>
-            Direction
-          </option>
-          <option value={"top"}>Top</option>
-          <option value={"left"}>Left</option>
-          <option value={"right"}>Right</option>
-          <option value={"bottom"}>Bottom</option>
-        </select>
+        <TooltipDirection direction={direction} setDirection={setDirection} />
       </div>
       <div
         id="main-container"
         style={{
-          // display: "flex",
-          // flexDirection: "column",
-          // justifyContent: "center",
           alignItems: "center",
-          // border: "1px solid blue",
           height: "99.5vh",
         }}
       >
@@ -225,125 +185,16 @@ const App = () => {
             overflow: "hidden",
           }}
         >
-          <div
-            style={{
-              position: "absolute",
-              top: 0,
-              left: "calc(100% - 31px)",
-              width: 30,
-              height: 30,
-              border: "1px solid lightblue",
-              textAlign: "center",
-              cursor: "grab",
-            }}
-            onMouseDown={handleContainerMouseDown}
-          ></div>
+          <ContainerHandler
+            handleContainerMouseDown={handleContainerMouseDown}
+          />
 
-          <div
-            id="resize-bottom"
-            style={{
-              width: `${containerWidth}px`,
-              height: 5,
-              cursor: "ns-resize",
-              position: "absolute",
-              top: "99.2%",
-              left: 0,
-              zIndex: 1000,
-            }}
-            onMouseDown={(e) => onResizeMouseDown(e, "bottom")}
-          ></div>
-          <div
-            id="resize-top"
-            style={{
-              width: `${containerWidth}px`,
-              height: 5,
-              cursor: "ns-resize",
-              position: "absolute",
-              top: -2,
-              left: 0,
-              zIndex: 1000,
-            }}
-            onMouseDown={(e) => onResizeMouseDown(e, "top")}
-          ></div>
-          <div
-            id="resize-left"
-            style={{
-              height: `${containerHeight}px`,
-              width: 5,
-              cursor: "ew-resize",
-              position: "absolute",
-              left: -1,
-              top: 0,
-              zIndex: 1000,
-            }}
-            onMouseDown={(e) => onResizeMouseDown(e, "left")}
-          ></div>
-          <div
-            id="resize-right"
-            style={{
-              height: `${containerHeight}px`,
-              width: 5,
-              cursor: "ew-resize",
-              position: "absolute",
-              top: 0,
-              left: "99.5%",
-              zIndex: 1000,
-            }}
-            onMouseDown={(e) => onResizeMouseDown(e, "right")}
-          ></div>
+          <ResizeHandler
+            containerWidth={containerWidth}
+            containerHeight={containerHeight}
+            onResizeMouseDown={onResizeMouseDown}
+          />
 
-          <div
-            id="resize-tl"
-            style={{
-              width: 5,
-              height: 5,
-              cursor: "nwse-resize",
-              position: "absolute",
-              top: 0,
-              left: 0,
-              zIndex: 1200,
-            }}
-            onMouseDown={(e) => onResizeMouseDown(e, "top-left")}
-          ></div>
-          <div
-            id="resize-tr"
-            style={{
-              width: 5,
-              height: 5,
-              cursor: "nesw-resize",
-              position: "absolute",
-              top: 0,
-              left: "99.5%",
-              zIndex: 1200,
-            }}
-            onMouseDown={(e) => onResizeMouseDown(e, "top-right")}
-          ></div>
-          <div
-            id="resize-bl"
-            style={{
-              width: 5,
-              height: 5,
-              cursor: "nesw-resize",
-              position: "absolute",
-              top: "99.5%",
-              left: -1,
-              zIndex: 1200,
-            }}
-            onMouseDown={(e) => onResizeMouseDown(e, "bottom-left")}
-          ></div>
-          <div
-            id="resize-br"
-            style={{
-              width: 5,
-              height: 5,
-              cursor: "nwse-resize",
-              position: "absolute",
-              top: "99.5%",
-              left: "99.5%",
-              zIndex: 1200,
-            }}
-            onMouseDown={(e) => onResizeMouseDown(e, "bottom-right")}
-          ></div>
           <div
             id="dragbox"
             style={{
