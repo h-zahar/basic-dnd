@@ -274,8 +274,8 @@ const useResize = ({
 
   const handleResizeUp = () => {
     document.removeEventListener("mousemove", throttledHandleResizeMove);
-    document.body.style.cursor = "auto";
     document.removeEventListener("mouseup", throttledHandleResizeUp);
+    document.body.style.cursor = "auto";
   };
 
   const onResizeMouseDown = (e: React.MouseEvent, handler: string) => {
@@ -312,11 +312,11 @@ const useResize = ({
     // const throttledHandleResizeMove = handleResizeMove;
 
     document.addEventListener("mousemove", throttledHandleResizeMove);
-    document.addEventListener("mouseup", handleResizeUp);
+    document.addEventListener("mouseup", throttledHandleResizeUp);
   };
 
   const throttledHandleResizeMove = throttle(handleResizeMove, 15);
-  const throttledHandleResizeUp = throttle(handleResizeUp, 20);
+  const throttledHandleResizeUp = throttle(handleResizeUp, 10);
 
   return {
     onResizeMouseDown,
