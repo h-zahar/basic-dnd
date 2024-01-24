@@ -5,6 +5,7 @@ import ResizeHandler from "./components/ResizeHandler";
 import ContainerHandler from "./components/ContainerHandler";
 import TooltipDirection from "./components/TooltipDirection";
 import throttle from "./utils/throttle";
+import Dragbox from "./components/Dragbox";
 
 const App = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -197,22 +198,13 @@ const App = () => {
             containerHeight={containerHeight}
             onResizeMouseDown={onResizeMouseDown}
           />
+          <Dragbox
+            position={position}
+            handleMouseDown={handleMouseDown}
+            handleMouseOver={handleMouseOver}
+            handleMouseOut={handleMouseOut}
+          />
 
-          <div
-            id="dragbox"
-            style={{
-              width: "100px",
-              height: "100px",
-              backgroundColor: "lightblue",
-              position: "absolute",
-              top: `${position.y}px`,
-              left: `${position.x}px`,
-              cursor: "move",
-            }}
-            onMouseDown={handleMouseDown}
-            onMouseOver={handleMouseOver}
-            onMouseOut={handleMouseOut}
-          ></div>
           {!isDragging && isHovered && (
             <Tooltip
               position={absolutePosition}
