@@ -1,3 +1,5 @@
+import throttle from "../utils/throttle";
+
 interface HookProps {
   position: { x: number; y: number };
   containerHeight: number;
@@ -247,7 +249,7 @@ const useResize = ({
   };
 
   const handleResizeUp = () => {
-    document.removeEventListener("mousemove", handleResizeMove);
+    document.removeEventListener("mousemove", throttledHandleResizeMove);
     document.removeEventListener("mouseup", handleResizeUp);
   };
 
@@ -273,10 +275,13 @@ const useResize = ({
 
     initialHeight = (parentRect?.height || 0) - 2;
     initialWidth = (parentRect?.width || 0) - 2;
+    // const throttledHandleResizeMove = handleResizeMove;
 
-    document.addEventListener("mousemove", handleResizeMove);
+    document.addEventListener("mousemove", throttledHandleResizeMove);
     document.addEventListener("mouseup", handleResizeUp);
   };
+
+  const throttledHandleResizeMove = throttle(handleResizeMove, 15);
 
   return {
     onResizeMouseDown,
