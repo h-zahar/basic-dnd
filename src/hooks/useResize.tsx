@@ -85,8 +85,6 @@ const useResize = ({
           y: position.y,
         });
 
-      console.log(xHigh, e.clientX - startPosition.x, newX);
-
       setContainerPosition({
         x: Math.min(
           startPosition.x + containerWidth - 100 - 2,
@@ -258,7 +256,14 @@ const useResize = ({
     e.stopPropagation();
     handlerString = handler;
 
-    startPosition = { x: e.clientX, y: e.clientY };
+    startPosition = {
+      x: handlerString.includes("left")
+        ? containerPosition.x
+        : containerPosition.x + containerWidth,
+      y: handlerString.includes("top")
+        ? containerPosition.y
+        : containerPosition.y + containerHeight,
+    };
     xHigh = position.x;
     yHigh = position.y;
 
