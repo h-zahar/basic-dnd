@@ -27,6 +27,8 @@ const useResize = ({
   let yHigh = 0;
   let initialHeight = 300;
   let initialWidth = 300;
+  let initialPaddingX = 0;
+  let initialPaddingY = 0;
 
   const handleResizeMove = (e: MouseEvent) => {
     const newX = e.clientX - containerPosition.x;
@@ -48,16 +50,16 @@ const useResize = ({
       );
     } else if (handlerString === "top") {
       yHigh =
-        e.clientY - startPosition.y >= initialHeight - 100
+        e.clientY - startPosition.y - initialPaddingY >= initialHeight - 100
           ? initialHeight - 100 || 0
-          : Math.max(yHigh, e.clientY - startPosition.y);
+          : Math.max(yHigh, e.clientY - startPosition.y - initialPaddingY);
 
-      if (e.clientY - startPosition.y <= newY)
+      if (e.clientY - startPosition.y - initialPaddingY <= newY)
         setPosition({
           y:
-            e.clientY - startPosition.y >= yHigh
+            e.clientY - startPosition.y - initialPaddingY >= yHigh
               ? 0
-              : yHigh - (e.clientY - startPosition.y),
+              : yHigh - (e.clientY - startPosition.y - initialPaddingY),
           x: position.x,
         });
 
@@ -65,38 +67,44 @@ const useResize = ({
         x: containerPosition.x,
         y: Math.min(
           startPosition.y + containerHeight - 100,
-          containerPosition.y + (e.clientY - startPosition.y)
+          containerPosition.y + (e.clientY - startPosition.y - initialPaddingY)
         ),
       });
 
       setContainerHeight(
-        Math.max(100, containerHeight - (e.clientY - startPosition.y))
+        Math.max(
+          100,
+          containerHeight - (e.clientY - startPosition.y - initialPaddingY)
+        )
       );
     } else if (handlerString === "left") {
       xHigh =
-        e.clientX - startPosition.x >= initialWidth - 100
+        e.clientX - startPosition.x - initialPaddingX >= initialWidth - 100
           ? initialWidth - 100 || 0
-          : Math.max(xHigh, e.clientX - startPosition.x);
+          : Math.max(xHigh, e.clientX - startPosition.x - initialPaddingX);
 
-      if (e.clientX - startPosition.x <= newX)
+      if (e.clientX - startPosition.x - initialPaddingX <= newX)
         setPosition({
           x:
-            e.clientX - startPosition.x >= xHigh
+            e.clientX - startPosition.x - initialPaddingX >= xHigh
               ? 0
-              : xHigh - (e.clientX - startPosition.x),
+              : xHigh - (e.clientX - startPosition.x - initialPaddingX),
           y: position.y,
         });
 
       setContainerPosition({
         x: Math.min(
-          startPosition.x + containerWidth - 100 - 2,
-          containerPosition.x + (e.clientX - startPosition.x) - 2
+          startPosition.x + containerWidth - 100 - initialPaddingX,
+          containerPosition.x + (e.clientX - startPosition.x - initialPaddingX)
         ),
         y: containerPosition.y,
       });
 
       setContainerWidth(
-        Math.max(100, containerWidth - (e.clientX - startPosition.x))
+        Math.max(
+          100,
+          containerWidth - (e.clientX - startPosition.x - initialPaddingX)
+        )
       );
     } else if (handlerString === "right") {
       xHigh =
@@ -133,21 +141,21 @@ const useResize = ({
       );
     } else if (handlerString === "top-right") {
       yHigh =
-        e.clientY - startPosition.y >= initialHeight - 100
+        e.clientY - startPosition.y - initialPaddingY >= initialHeight - 100
           ? initialHeight - 100 || 0
-          : Math.max(yHigh, e.clientY - startPosition.y);
+          : Math.max(yHigh, e.clientY - startPosition.y - initialPaddingY);
 
       xHigh =
         xHigh <= 0
           ? 0
           : Math.min(xHigh, initialWidth - (startPosition.x - e.clientX) - 100);
 
-      if (e.clientY - startPosition.y <= newY)
+      if (e.clientY - startPosition.y - initialPaddingY <= newY)
         setPosition({
           y:
-            e.clientY - startPosition.y >= yHigh
+            e.clientY - startPosition.y - initialPaddingY >= yHigh
               ? 0
-              : yHigh - (e.clientY - startPosition.y),
+              : yHigh - (e.clientY - startPosition.y - initialPaddingY),
           x: xHigh <= 0 ? 0 : xHigh,
         });
 
@@ -155,12 +163,15 @@ const useResize = ({
         x: containerPosition.x,
         y: Math.min(
           startPosition.y + containerHeight - 100,
-          containerPosition.y + (e.clientY - startPosition.y)
+          containerPosition.y + (e.clientY - startPosition.y - initialPaddingY)
         ),
       });
 
       setContainerHeight(
-        Math.max(100, containerHeight - (e.clientY - startPosition.y))
+        Math.max(
+          100,
+          containerHeight - (e.clientY - startPosition.y - initialPaddingY)
+        )
       );
 
       setContainerWidth(
@@ -176,23 +187,23 @@ const useResize = ({
             );
 
       xHigh =
-        e.clientX - startPosition.x >= initialWidth - 100
+        e.clientX - startPosition.x - initialPaddingX >= initialWidth - 100
           ? initialWidth - 100 || 0
-          : Math.max(xHigh, e.clientX - startPosition.x);
+          : Math.max(xHigh, e.clientX - startPosition.x - initialPaddingX);
 
-      if (e.clientX - startPosition.x <= newX)
+      if (e.clientX - startPosition.x - initialPaddingX <= newX)
         setPosition({
           x:
-            e.clientX - startPosition.x >= xHigh
+            e.clientX - startPosition.x - initialPaddingX >= xHigh
               ? 0
-              : xHigh - (e.clientX - startPosition.x),
+              : xHigh - (e.clientX - startPosition.x - initialPaddingX),
           y: yHigh <= 0 ? 0 : yHigh,
         });
 
       setContainerPosition({
         x: Math.min(
           startPosition.x + containerWidth - 100,
-          containerPosition.x + (e.clientX - startPosition.x)
+          containerPosition.x + (e.clientX - startPosition.x - initialPaddingX)
         ),
         y: containerPosition.y,
       });
@@ -202,48 +213,57 @@ const useResize = ({
       );
 
       setContainerWidth(
-        Math.max(100, containerWidth - (e.clientX - startPosition.x))
+        Math.max(
+          100,
+          containerWidth - (e.clientX - startPosition.x - initialPaddingX)
+        )
       );
     } else if (handlerString === "top-left") {
       yHigh =
-        e.clientY - startPosition.y >= initialHeight - 100
+        e.clientY - startPosition.y - initialPaddingY >= initialHeight - 100
           ? initialHeight - 100 || 0
-          : Math.max(yHigh, e.clientY - startPosition.y);
+          : Math.max(yHigh, e.clientY - startPosition.y - initialPaddingY);
 
       xHigh =
-        e.clientX - startPosition.x >= initialWidth - 100
+        e.clientX - startPosition.x - initialPaddingX >= initialWidth - 100
           ? initialWidth - 100 || 0
-          : Math.max(xHigh, e.clientX - startPosition.x);
+          : Math.max(xHigh, e.clientX - startPosition.x - initialPaddingX);
 
-      if (e.clientX - startPosition.x <= newX)
+      if (e.clientX - startPosition.x - initialPaddingX <= newX)
         setPosition({
           x:
-            e.clientX - startPosition.x >= xHigh
+            e.clientX - startPosition.x - initialPaddingX >= xHigh
               ? 0
-              : xHigh - (e.clientX - startPosition.x),
+              : xHigh - (e.clientX - startPosition.x - initialPaddingX),
           y:
-            e.clientY - startPosition.y >= yHigh
+            e.clientY - startPosition.y - initialPaddingY >= yHigh
               ? 0
-              : yHigh - (e.clientY - startPosition.y),
+              : yHigh - (e.clientY - startPosition.y - initialPaddingY),
         });
 
       setContainerPosition({
         x: Math.min(
           startPosition.x + containerWidth - 100,
-          containerPosition.x + (e.clientX - startPosition.x)
+          containerPosition.x + (e.clientX - startPosition.x - initialPaddingX)
         ),
         y: Math.min(
           startPosition.y + containerHeight - 100,
-          containerPosition.y + (e.clientY - startPosition.y)
+          containerPosition.y + (e.clientY - startPosition.y - initialPaddingY)
         ),
       });
 
       setContainerHeight(
-        Math.max(100, containerHeight - (e.clientY - startPosition.y))
+        Math.max(
+          100,
+          containerHeight - (e.clientY - startPosition.y - initialPaddingY)
+        )
       );
 
       setContainerWidth(
-        Math.max(100, containerWidth - (e.clientX - startPosition.x))
+        Math.max(
+          100,
+          containerWidth - (e.clientX - startPosition.x - initialPaddingX)
+        )
       );
     }
   };
@@ -266,15 +286,18 @@ const useResize = ({
         ? containerPosition.y
         : containerPosition.y + containerHeight,
     };
+
     xHigh = position.x;
     yHigh = position.y;
+    initialPaddingX = e.clientX - startPosition.x;
+    initialPaddingY = e.clientY - startPosition.y;
 
     const parentRect = document
       .getElementById("container")
       ?.getBoundingClientRect();
 
-    initialHeight = (parentRect?.height || 0) - 2;
-    initialWidth = (parentRect?.width || 0) - 2;
+    initialHeight = parentRect?.height || 0;
+    initialWidth = parentRect?.width || 0;
     // const throttledHandleResizeMove = handleResizeMove;
 
     document.addEventListener("mousemove", throttledHandleResizeMove);
