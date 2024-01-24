@@ -30,7 +30,11 @@ const useResize = ({
   let initialPaddingX = 0;
   let initialPaddingY = 0;
 
+  let cursor = "auto";
+
   const handleResizeMove = (e: MouseEvent) => {
+    document.body.style.cursor = cursor;
+
     const newX = e.clientX - containerPosition.x;
     const newY = e.clientY - containerPosition.y;
 
@@ -269,6 +273,8 @@ const useResize = ({
   };
 
   const handleResizeUp = () => {
+    document.body.style.cursor = "auto";
+
     document.removeEventListener("mousemove", throttledHandleResizeMove);
     document.removeEventListener("mouseup", handleResizeUp);
   };
@@ -276,6 +282,12 @@ const useResize = ({
   const onResizeMouseDown = (e: React.MouseEvent, handler: string) => {
     e.preventDefault();
     e.stopPropagation();
+
+    cursor =
+      document.getElementById(e.currentTarget.id!)?.style?.cursor || "auto";
+
+    document.body.style.cursor = cursor;
+
     handlerString = handler;
 
     startPosition = {
