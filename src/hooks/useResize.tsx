@@ -94,7 +94,7 @@ const useResize = ({
 
       setContainerPosition({
         x: Math.min(
-          startPosition.x + containerWidth - 100 - initialPaddingX,
+          startPosition.x + containerWidth - 100,
           containerPosition.x + (e.clientX - startPosition.x - initialPaddingX)
         ),
         y: containerPosition.y,
