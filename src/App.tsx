@@ -4,6 +4,7 @@ import useResize from "./hooks/useResize";
 import ResizeHandler from "./components/ResizeHandler";
 import ContainerHandler from "./components/ContainerHandler";
 import TooltipDirection from "./components/TooltipDirection";
+import throttle from "./utils/throttle";
 
 const App = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -76,7 +77,7 @@ const App = () => {
       x: dragboxRect?.x || 0,
     });
 
-    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mousemove", throttledDragBox);
     document.addEventListener("mouseup", handleMouseUp);
   };
 
@@ -110,7 +111,7 @@ const App = () => {
 
   const handleMouseUp = () => {
     setIsDragging(false);
-    document.removeEventListener("mousemove", handleMouseMove);
+    document.removeEventListener("mousemove", throttledDragBox);
     document.removeEventListener("mouseup", handleMouseUp);
   };
 
@@ -152,6 +153,8 @@ const App = () => {
     document.removeEventListener("mousemove", handleContainerMouseMove);
     document.removeEventListener("mouseup", handleContainerMouseUp);
   };
+
+  const throttledDragBox = throttle(handleMouseMove, 5);
 
   return (
     <div style={{ width: "100vw", height: "100vh" }}>
