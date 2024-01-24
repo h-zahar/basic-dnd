@@ -27,10 +27,8 @@ const useResize = ({
   let initialWidth = 300;
 
   const handleResizeMove = (e: MouseEvent) => {
-    const newX =
-      e.clientX - (position.x === 0 ? e.clientX : containerPosition.x);
-    const newY =
-      e.clientY - (position.y === 0 ? e.clientY : containerPosition.y);
+    const newX = e.clientX - containerPosition.x;
+    const newY = e.clientY - containerPosition.y;
 
     if (handlerString === "bottom") {
       yHigh =
@@ -86,6 +84,8 @@ const useResize = ({
               : xHigh - (e.clientX - startPosition.x),
           y: position.y,
         });
+
+      console.log(xHigh, e.clientX - startPosition.x, newX);
 
       setContainerPosition({
         x: Math.min(
