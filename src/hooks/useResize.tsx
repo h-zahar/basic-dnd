@@ -50,7 +50,10 @@ const useResize = ({
       setPosition({ x: position.x, y: yHigh <= 0 ? 0 : yHigh });
 
       setContainerHeight(
-        Math.max(100, containerHeight + (e.clientY - startPosition.y))
+        Math.max(
+          100,
+          containerHeight + (e.clientY - startPosition.y - initialPaddingY)
+        )
       );
     } else if (handlerString === "top") {
       yHigh =
@@ -119,7 +122,10 @@ const useResize = ({
       setPosition({ x: xHigh <= 0 ? 0 : xHigh, y: position.y });
 
       setContainerWidth(
-        Math.max(100, containerWidth + (e.clientX - startPosition.x))
+        Math.max(
+          100,
+          containerWidth + (e.clientX - startPosition.x - initialPaddingX)
+        )
       );
     } else if (handlerString === "bottom-right") {
       yHigh =
@@ -138,10 +144,16 @@ const useResize = ({
       setPosition({ x: xHigh <= 0 ? 0 : xHigh, y: yHigh <= 0 ? 0 : yHigh });
 
       setContainerWidth(
-        Math.max(100, containerWidth + (e.clientX - startPosition.x))
+        Math.max(
+          100,
+          containerWidth + (e.clientX - startPosition.x - initialPaddingX)
+        )
       );
       setContainerHeight(
-        Math.max(100, containerHeight + (e.clientY - startPosition.y))
+        Math.max(
+          100,
+          containerHeight + (e.clientY - startPosition.y - initialPaddingY)
+        )
       );
     } else if (handlerString === "top-right") {
       yHigh =
@@ -179,7 +191,10 @@ const useResize = ({
       );
 
       setContainerWidth(
-        Math.max(100, containerWidth + (e.clientX - startPosition.x))
+        Math.max(
+          100,
+          containerWidth + (e.clientX - startPosition.x - initialPaddingX)
+        )
       );
     } else if (handlerString === "bottom-left") {
       yHigh =
@@ -213,7 +228,10 @@ const useResize = ({
       });
 
       setContainerHeight(
-        Math.max(100, containerHeight + (e.clientY - startPosition.y))
+        Math.max(
+          100,
+          containerHeight + (e.clientY - startPosition.y - initialPaddingY)
+        )
       );
 
       setContainerWidth(
@@ -309,7 +327,6 @@ const useResize = ({
 
     initialHeight = parentRect?.height || 0;
     initialWidth = parentRect?.width || 0;
-    // const throttledHandleResizeMove = handleResizeMove;
 
     document.addEventListener("mousemove", throttledHandleResizeMove);
     document.addEventListener("mouseup", throttledHandleResizeUp);
