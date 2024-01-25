@@ -314,7 +314,7 @@ const useResize = ({
   const handleResizeUp = () => {
     document.removeEventListener("mousemove", throttledHandleResizeMove);
     document.removeEventListener("mouseup", throttledHandleResizeUp);
-    document.body.style.cursor = "auto";
+    setTimeout(() => (document.body.style.cursor = "auto"), 200);
   };
 
   const onResizeMouseDown = (e: React.MouseEvent, handler: string) => {
