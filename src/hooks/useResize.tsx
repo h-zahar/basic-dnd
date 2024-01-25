@@ -44,7 +44,9 @@ const useResize = ({
           ? 0
           : Math.min(
               yHigh,
-              initialHeight - (startPosition.y - e.clientY) - 100
+              initialHeight -
+                (startPosition.y - e.clientY + initialPaddingY) -
+                100
             );
 
       setPosition({ x: position.x, y: yHigh <= 0 ? 0 : yHigh });
@@ -117,7 +119,12 @@ const useResize = ({
       xHigh =
         xHigh <= 0
           ? 0
-          : Math.min(xHigh, initialWidth - (startPosition.x - e.clientX) - 100);
+          : Math.min(
+              xHigh,
+              initialWidth -
+                (startPosition.x - e.clientX + initialPaddingX) -
+                100
+            );
 
       setPosition({ x: xHigh <= 0 ? 0 : xHigh, y: position.y });
 
@@ -133,13 +140,20 @@ const useResize = ({
           ? 0
           : Math.min(
               yHigh,
-              initialHeight - (startPosition.y - e.clientY) - 100
+              initialHeight -
+                (startPosition.y - e.clientY + initialPaddingY) -
+                100
             );
 
       xHigh =
         xHigh <= 0
           ? 0
-          : Math.min(xHigh, initialWidth - (startPosition.x - e.clientX) - 100);
+          : Math.min(
+              xHigh,
+              initialWidth -
+                (startPosition.x - e.clientX + initialPaddingX) -
+                100
+            );
 
       setPosition({ x: xHigh <= 0 ? 0 : xHigh, y: yHigh <= 0 ? 0 : yHigh });
 
@@ -164,7 +178,12 @@ const useResize = ({
       xHigh =
         xHigh <= 0
           ? 0
-          : Math.min(xHigh, initialWidth - (startPosition.x - e.clientX) - 100);
+          : Math.min(
+              xHigh,
+              initialWidth -
+                (startPosition.x - e.clientX + initialPaddingX) -
+                100
+            );
 
       if (e.clientY - startPosition.y - initialPaddingY <= newY)
         setPosition({
@@ -202,7 +221,9 @@ const useResize = ({
           ? 0
           : Math.min(
               yHigh,
-              initialHeight - (startPosition.y - e.clientY) - 100
+              initialHeight -
+                (startPosition.y - e.clientY + initialPaddingY) -
+                100
             );
 
       xHigh =
