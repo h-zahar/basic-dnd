@@ -67,8 +67,8 @@ const ResizeHandler = ({
       <div
         id="resize-tl"
         style={{
-          width: 5,
-          height: 5,
+          width: 8,
+          height: 8,
           cursor: "nwse-resize",
           position: "absolute",
           top: 0,
@@ -80,8 +80,8 @@ const ResizeHandler = ({
       <div
         id="resize-tr"
         style={{
-          width: 5,
-          height: 5,
+          width: 8,
+          height: 8,
           cursor: "nesw-resize",
           position: "absolute",
           top: 0,
@@ -93,8 +93,8 @@ const ResizeHandler = ({
       <div
         id="resize-bl"
         style={{
-          width: 5,
-          height: 5,
+          width: 8,
+          height: 8,
           cursor: "nesw-resize",
           position: "absolute",
           top: "99.5%",
@@ -106,8 +106,8 @@ const ResizeHandler = ({
       <div
         id="resize-br"
         style={{
-          width: 5,
-          height: 5,
+          width: 8,
+          height: 8,
           cursor: "nwse-resize",
           position: "absolute",
           top: "99.5%",
