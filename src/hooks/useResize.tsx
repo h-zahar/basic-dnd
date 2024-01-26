@@ -1,4 +1,3 @@
-import throttle from "../utils/throttle";
 import { HookProps } from "../types/hookProps";
 
 const useResize = ({
@@ -22,12 +21,12 @@ const useResize = ({
 
   let cursor = "auto";
 
-  const handleResizeMove = (e: MouseEvent) => {
-    document.body.style.cursor = cursor;
-
-    const newX = e.clientX - containerPosition.x;
-    const newY = e.clientY - containerPosition.y;
-
+  const update = (
+    newX: number,
+    newY: number,
+    startPosition: { x: number; y: number },
+    e: MouseEvent
+  ) => {
     if (handlerString === "bottom") {
       yHigh =
         yHigh <= 0
@@ -301,9 +300,18 @@ const useResize = ({
     }
   };
 
+  const handleResizeMove = (e: MouseEvent) => {
+    document.body.style.cursor = cursor;
+
+    const newX = e.clientX - containerPosition.x;
+    const newY = e.clientY - containerPosition.y;
+
+    requestAnimationFrame(() => update(newX, newY, startPosition, e));
+  };
+
   const handleResizeUp = () => {
-    document.removeEventListener("mousemove", throttledHandleResizeMove);
-    document.removeEventListener("mouseup", throttledHandleResizeUp);
+    document.removeEventListener("mousemove", handleResizeMove);
+    document.removeEventListener("mouseup", handleResizeUp);
     setTimeout(() => (document.body.style.cursor = "auto"), 200);
   };
 
@@ -339,12 +347,12 @@ const useResize = ({
     initialHeight = parentRect?.height || 0;
     initialWidth = parentRect?.width || 0;
 
-    document.addEventListener("mousemove", throttledHandleResizeMove);
-    document.addEventListener("mouseup", throttledHandleResizeUp);
+    document.addEventListener("mousemove", handleResizeMove);
+    document.addEventListener("mouseup", handleResizeUp);
   };
 
-  const throttledHandleResizeMove = throttle(handleResizeMove, 15);
-  const throttledHandleResizeUp = throttle(handleResizeUp, 10);
+  // const throttledHandleResizeMove = throttle(handleResizeMove, 15);
+  // const throttledHandleResizeUp = throttle(handleResizeUp, 10);
 
   return {
     onResizeMouseDown,

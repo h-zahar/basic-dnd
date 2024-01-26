@@ -4,7 +4,7 @@ import useResize from "./hooks/useResize";
 import ResizeHandler from "./components/ResizeHandler";
 import ContainerHandler from "./components/ContainerHandler";
 import TooltipDirection from "./components/TooltipDirection";
-import throttle from "./utils/throttle";
+// import throttle from "./utils/throttle";
 import Dragbox from "./components/Dragbox";
 
 const App = () => {
@@ -78,16 +78,11 @@ const App = () => {
       x: dragboxRect?.x || 0,
     });
 
-    document.addEventListener("mousemove", throttledDragBox);
+    document.addEventListener("mousemove", handleMouseMove);
     document.addEventListener("mouseup", handleMouseUp);
   };
 
-  const handleMouseMove = (e: MouseEvent) => {
-    const newX =
-      e.clientX - (startPosition.x === 0 ? e.clientX : startPosition.x);
-    const newY =
-      e.clientY - (startPosition.y === 0 ? e.clientY : startPosition.y);
-
+  const updateDragbox = (newX: number, newY: number) => {
     const parentRect = document
       .getElementById("container")
       ?.getBoundingClientRect();
@@ -110,9 +105,19 @@ const App = () => {
     });
   };
 
+  const handleMouseMove = (e: MouseEvent) => {
+    const newX =
+      e.clientX - (startPosition.x === 0 ? e.clientX : startPosition.x);
+    const newY =
+      e.clientY - (startPosition.y === 0 ? e.clientY : startPosition.y);
+
+    requestAnimationFrame(() => updateDragbox(newX, newY));
+  };
+
   const handleMouseUp = () => {
     setIsDragging(false);
-    document.removeEventListener("mousemove", throttledDragBox);
+    // document.removeEventListener("mousemove", throttledDragBox);
+    document.removeEventListener("mousemove", handleMouseMove);
     document.removeEventListener("mouseup", handleMouseUp);
   };
 
@@ -155,7 +160,7 @@ const App = () => {
     document.removeEventListener("mouseup", handleContainerMouseUp);
   };
 
-  const throttledDragBox = throttle(handleMouseMove, 5);
+  // const throttledDragBox = throttle(handleMouseMove, 5);
 
   return (
     <div style={{ width: "100vw", height: "100vh" }}>
